@@ -5,6 +5,7 @@ import Note from "./Note";
 export default function AllNotes() {
     const [allNotes, setAllNotes] = useState([]);
     const [newNote, setNewNote] = useState("");
+    const [imp, setImp] = useState(false)
 
     useEffect(() => {
         async function fetchNotes() {
@@ -21,6 +22,9 @@ export default function AllNotes() {
 
     async function addNote(e) {
         e.preventDefault();
+
+        if(!newNote.trim()) return;
+
         const noteObject = {
             content: newNote,
             important: false
@@ -39,13 +43,40 @@ export default function AllNotes() {
         setNewNote(e.target.value)
     }
 
-    console.log(allNotes);
+    const deleteNote = async(id) => {
+        try{
+            await axios.delete(`http://localhost:3001/notes/${id}`)
+            setAllNotes(prev => prev.filter(note => note.id !== id))
+        }
+        catch(err){
+           console.log(err)
+        }
+    }
+
+    const toggleNote = async(id) => {
+        console.log('clicked star')
+        console.log(allNotes)
+        
+        const toBeUpdated = allNotes.find(note => note.id === id);
+        const update = {important : !toBeUpdated.important}
+        try{
+           const res =  await axios.patch(`http://localhost:3001/notes/${id}`, update)
+           console.log(res.data)
+        setAllNotes(prev => prev.map((note) => note.id === id ? res.data : note))
+        }
+        catch(err){
+            console.log(err);
+        }
+        
+    }
+
+    
     return (
         <div>
             
                 <ul>
                 {allNotes.map((note, idx) => {
-                    return <Note key={idx} topic={note.content} important = {note.important} />
+                    return <Note key={note.id} topic={note.content} important = {note.important} deleteNote={() => deleteNote(note.id)} toggleImp = {() => toggleNote(note.id)}/>
                 })}
                 </ul>
             
