@@ -23,7 +23,7 @@ export default function AllNotes() {
     async function addNote(e) {
         e.preventDefault();
 
-        if(!newNote.trim()) return;
+        if (!newNote.trim()) return;
 
         const noteObject = {
             content: newNote,
@@ -43,43 +43,56 @@ export default function AllNotes() {
         setNewNote(e.target.value)
     }
 
-    const deleteNote = async(id) => {
-        try{
+    const deleteNote = async (id) => {
+        try {
             await axios.delete(`http://localhost:3001/notes/${id}`)
             setAllNotes(prev => prev.filter(note => note.id !== id))
         }
-        catch(err){
-           console.log(err)
+        catch (err) {
+            console.log(err)
         }
     }
 
-    const toggleNote = async(id) => {
+    const toggleNote = async (id) => {
         console.log('clicked star')
         console.log(allNotes)
-        
+
         const toBeUpdated = allNotes.find(note => note.id === id);
-        const update = {important : !toBeUpdated.important}
-        try{
-           const res =  await axios.patch(`http://localhost:3001/notes/${id}`, update)
-           console.log(res.data)
-        setAllNotes(prev => prev.map((note) => note.id === id ? res.data : note))
+        const update = { important: !toBeUpdated.important }
+        try {
+            const res = await axios.patch(`http://localhost:3001/notes/${id}`, update)
+            console.log(res.data)
+            setAllNotes(prev => prev.map((note) => note.id === id ? res.data : note))
         }
-        catch(err){
+        catch (err) {
             console.log(err);
         }
-        
+
     }
 
-    
+    const editText = async (id, newValue) => {
+        
+        const update = { content: newValue }
+        try {
+            const res = await axios.patch(`http://localhost:3001/notes/${id}`, update)
+            console.log(res.data)
+            setAllNotes(prev => prev.map((note) => note.id === id ? res.data : note))
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+
     return (
         <div>
-            
-                <ul>
+
+            <ul>
                 {allNotes.map((note, idx) => {
-                    return <Note key={note.id} topic={note.content} important = {note.important} deleteNote={() => deleteNote(note.id)} toggleImp = {() => toggleNote(note.id)}/>
+                    return <Note key={note.id} note={note} topic={note.content} important={note.important} deleteNote={() => deleteNote(note.id)} toggleImp={() => toggleNote(note.id)} editText={editText} />
                 })}
-                </ul>
-            
+            </ul>
+
             <form onSubmit={addNote}>
                 <input value={newNote} onChange={handleNoteChange} />
                 <button type="submit">save</button>

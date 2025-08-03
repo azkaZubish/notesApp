@@ -1,13 +1,13 @@
-.Note {
+.list-item {
     list-style-type: none;
     padding: 0;
     margin: 0;
 }
 
-.note-item {
+.note-item, .important{
   cursor: default;
 }
 
-.note-item:hover {
+.note-item:hover, .important:hover {
   cursor: pointer;
 }
