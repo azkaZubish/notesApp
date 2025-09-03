@@ -1,12 +1,46 @@
-# React + Vite
+📝#Notes Taking App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A simple and elegant notes taking application built with React. Users can add, edit, delete, and mark notes as important. Notes are stored on a JSON server, making it lightweight and perfect for learning full-stack concepts.
 
-Currently, two official plugins are available:
+#Features
+➕ Add new notes
+🖊️ Edit existing notes
+🗑️ Delete notes
+⭐ Mark notes as important
+🔄 Filter between All Notes and Important Notes
+🎨 Clean UI with responsive design
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+🛠️ #Tech Stack
+-Frontend: React (with hooks & functional components)
+-Styling: CSS (custom, with modern UI design)
+-Backend: JSON Server (for storing notes in db.json)
 
-## Expanding the ESLint configuration
+⚙️ Installation & Setup
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+-Clone the repo
+```bash
+git clone https://github.com/yourusername/notes-app.git
+cd notes-app
+```
+
+-Install dependencies
+```bash
+npm install
+```
+
+-Run JSON server (default port: 3001)
+```bash
+npx json-server --watch db.json --port 3001
+```
+
+-Start the React app
+```bash
+npm start
+```
+
+📌 #Future Improvements
+
+🔍 Search notes
+📅 Add timestamps
+🏷️ Categories/Tags
+☁️ Real backend (Express / MongoDB / Firebase)

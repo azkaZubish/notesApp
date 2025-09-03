@@ -19,3 +19,56 @@
 .save-btn:hover {
   background: #444;
 }
+.header {
+    font-size: 40px;
+    font-weight: 400;
+    color: #222;
+    margin-top: 1rem;
+}
+
+.notes-nav {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin: 0 auto;
+  margin-bottom: 1rem;
+  margin-top: 1.5rem;
+  padding: 1rem;
+  max-width: 900px;
+  
+}
+
+.filter {
+    display: flex;
+    gap: 1rem;
+}
+
+.filter-btn{
+   
+  background: #f5f5f5;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 20px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  background: #ececec;
+}
+
+.filter-btn.active {
+  background: #0077ff;
+  color: white;
+}
+.add-note{
+   border-radius: 50%;
+   background: #222;
+   color: white;
+   height: 40px;
+   width: 40px;
+   justify-self: flex-end;
+   font-size: 1rem;
+}

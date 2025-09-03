@@ -19,10 +19,10 @@ export default function Note({ note, topic, important, deleteNote, toggleImp, ed
 
     return (
         <li className='list-item'>
-            <span onClick={toggleImp} className="note-actions">
-                <button>{important ? '⭐' : '〰️'}</button>
+            <span onClick={toggleImp} className="note-action note-star">
+                {important ? '⭐' : ''}
             </span>
-            <span>
+            <div className="note-main">
 
                 {isEditing ?
 
@@ -34,12 +34,11 @@ export default function Note({ note, topic, important, deleteNote, toggleImp, ed
                 >
                 </input> 
                 : 
-                <span onClick={() => setIsEditing(true)} className="note-content">{topic}</span>}
+                <span className="note-content">{topic}</span>}
             
-            </span>
-            <span onClick={deleteNote} className="note-actions">
-                <button>❎</button>
-            </span>
+            </div>
+            <span onClick={() => setIsEditing(true)} className="note-action note-edit">✏️</span>
+            <span onClick={deleteNote} className="note-action note-delete"> 🗑 </span>
         </li>
     )
 }
