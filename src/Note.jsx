@@ -1,29 +1,32 @@
 import { useState } from "react"
 import "./Note.css"
 export default function Note({ note, topic, important, deleteNote, toggleImp, editText}) {
-    console.log(topic)
+    // console.log(topic)
     const [isEditing, setIsEditing] = useState(false)
     const [newValue, setIsNewValue] = useState(topic)
 
     const handleKey = (e) => {
         if(e.key === 'Enter'){
             setIsEditing(false)
+            editText(note.id, newValue);
         }
     }
 
     const handleChange = (e) => {
         setIsNewValue(e.target.value);
-        editText(note.id, newValue);
+        console.log(newValue)
     }
 
     return (
         <li className='list-item'>
-            <span onClick={toggleImp} className="important">{important ? '⭐' : '〰️'}</span>
+            <span onClick={toggleImp} className="note-actions">
+                <button>{important ? '⭐' : '〰️'}</button>
+            </span>
             <span>
 
                 {isEditing ?
 
-                <input
+                <input className="note-input"
                 type="text"
                 onChange={handleChange}
                 value = {newValue}
@@ -31,10 +34,12 @@ export default function Note({ note, topic, important, deleteNote, toggleImp, ed
                 >
                 </input> 
                 : 
-                <span onDoubleClick={() => setIsEditing(true)}>{topic}</span>}
+                <span onClick={() => setIsEditing(true)} className="note-content">{topic}</span>}
             
             </span>
-            <span onClick={deleteNote} className="note-item">❎</span>
+            <span onClick={deleteNote} className="note-actions">
+                <button>❎</button>
+            </span>
         </li>
     )
 }

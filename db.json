@@ -2,8 +2,8 @@
   "notes": [
     {
       "id": "2",
-      "content": "new vlaue is adde",
-      "important": true
+      "content": "New note is edited",
+      "important": false
     },
     {
       "id": "3",
@@ -14,6 +14,11 @@
       "id": "cb87",
       "content": "what did you do",
       "important": false
+    },
+    {
+      "id": "041c",
+      "content": "djwiwgooo",
+      "important": true
     }
   ]
 }

@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react"
 import axios, { all } from "axios";
 import Note from "./Note";
+import "./AllNotes.css"
 
 export default function AllNotes() {
     const [allNotes, setAllNotes] = useState([]);
@@ -86,7 +87,7 @@ export default function AllNotes() {
         setImp(e.target.checked)
     }
 
-    console.log(allNotes.filter(note => note.important === true))
+    // console.log(allNotes.filter(note => note.important === true))
     return (
         <div>
             <div>
@@ -94,7 +95,7 @@ export default function AllNotes() {
                 <label htmlFor="important">Important notes</label>
             </div>
 
-            <ul>
+            <ul className="notes-container">
                 {(imp ? allNotes.filter(note => note.important) : allNotes).map(note => {
                      return <Note key={note.id} note={note} topic={note.content} important={note.important} deleteNote={() => deleteNote(note.id)} toggleImp={() => toggleNote(note.id)} editText={editText} />
                 })}
@@ -102,7 +103,7 @@ export default function AllNotes() {
 
             <form onSubmit={addNote}>
                 <input value={newNote} onChange={handleNoteChange} />
-                <button type="submit">save</button>
+                <button type="submit" className="save-btn">save</button>
             </form>
         </div>
     )
