@@ -35,7 +35,7 @@ npx json-server --watch db.json --port 3001
 
 -Start the React app
 ```bash
-npm start
+npm run dev
 ```
 
 📌 #Future Improvements
