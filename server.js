@@ -18,6 +18,36 @@ app.get("/notes", (req, res) => {
     res.json(JSON.parse(data));
   });
 });
+app.get("/notes/:id", (req, res) => {
+  const { id } = req.params;
+  fs.readFile(path.join(__dirname, "db.json"), "utf8", (err, data) => {
+    if (err) return res.status(500).json({ error: "Failed to read data" });
+    const notes = JSON.parse(data);
+    const note = notes.find(n => n.id == id);
+    if (!note) return res.status(404).json({ error: "Note not found" });
+    res.json(note);
+  });
+});
+app.patch("/notes/:id", express.json(), (req, res) => {
+  const { id } = req.params;
+  const updated = req.body;
+
+  fs.readFile(path.join(__dirname, "db.json"), "utf8", (err, data) => {
+    if (err) return res.status(500).json({ error: "Failed to read data" });
+
+    let notes = JSON.parse(data);
+    let note = notes.find(n => n.id == id);
+    if (!note) return res.status(404).json({ error: "Note not found" });
+
+    note = { ...note, ...updated };
+    notes = notes.map(n => (n.id == id ? note : n));
+
+    fs.writeFile(path.join(__dirname, "db.json"), JSON.stringify(notes), err => {
+      if (err) return res.status(500).json({ error: "Failed to update data" });
+      res.json(note);
+    });
+  });
+});
 
 // Optional: serve index.html if user visits root
 app.get("/", (req, res) => {
