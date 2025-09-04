@@ -12,21 +12,21 @@ const PORT = process.env.PORT || 10000;
 
 // Middleware
 app.use(cors());
+app.use(express.json());
 
 // Serve React build
 app.use(express.static(path.join(__dirname, "dist")));
 
-// JSON Server router (on /api)
+// JSON Server router on /api
 const router = jsonServer.router("db.json");
 const middlewares = jsonServer.defaults();
 app.use("/api", middlewares, router);
 
-// React catch-all (for client-side routing)
-app.get("*", (req, res) => {
+// Catch-all → must come last
+app.get("/*", (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
-// Start express
 app.listen(PORT, () => {
   console.log(`App running on http://localhost:${PORT}`);
 });
