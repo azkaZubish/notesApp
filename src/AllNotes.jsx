@@ -2,7 +2,7 @@ import { useEffect, useState } from "react"
 import axios, { all } from "axios";
 import Note from "./Note";
 import "./AllNotes.css"
-import API_URL from "./api";
+import API_URL from "./api.js";
 
 export default function AllNotes() {
     const [allNotes, setAllNotes] = useState([]);
