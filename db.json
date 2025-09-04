@@ -1,24 +1,22 @@
-{
-  "notes": [
-    {
-      "id": "2",
-      "content": "The star indicates the important note",
-      "important": true
-    },
-    {
-      "id": "3",
-      "content": "It uses JSON server(npm package) to store the notes",
-      "important": true
-    },
-    {
-      "id": "041c",
-      "content": "Built on React",
-      "important": true
-    },
-    {
-      "id": "fe84",
-      "content": "Click on the pencil to edit the text",
-      "important": false
-    }
-  ]
-}
+[
+  {
+    "id": "2",
+    "content": "The star indicates the important note",
+    "important": true
+  },
+  {
+    "id": "3",
+    "content": "It uses JSON server(npm package) to store the notes",
+    "important": true
+  },
+  {
+    "id": "041c",
+    "content": "Built on React",
+    "important": true
+  },
+  {
+    "id": "fe84",
+    "content": "Click on the pencil to edit the text",
+    "important": false
+  }
+]
