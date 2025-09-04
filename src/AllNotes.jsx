@@ -12,7 +12,7 @@ export default function AllNotes() {
     useEffect(() => {
         async function fetchNotes() {
             try {
-                const notes = await axios.get(`${API_URL}/notes`)
+                const notes = await axios.get(`/notes`)
                 setAllNotes(notes.data);
             }
             catch (e) {
