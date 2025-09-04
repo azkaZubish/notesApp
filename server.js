@@ -52,6 +52,56 @@ app.patch("/notes/:id", (req, res) => {
   });
 });
 
+app.post("/notes", (req, res) => {
+  fs.readFile(path.join(__dirname, "db.json"), "utf8", (err, data) => {
+    if (err) return res.status(500).json({ error: "Failed to read data" });
+
+    let notes = JSON.parse(data);
+
+    // Create default note
+    const newNote = {
+      id: Math.random().toString(16).slice(2, 6),
+      content: "",
+      important: false
+    };
+
+    notes.push(newNote);
+
+    fs.writeFile(
+      path.join(__dirname, "db.json"),
+      JSON.stringify(notes, null, 2),
+      err => {
+        if (err) return res.status(500).json({ error: "Failed to write data" });
+        res.status(201).json(newNote);
+      }
+    );
+  });
+});
+
+app.delete("/notes/:id", (req, res) => {
+  const { id } = req.params;
+
+  fs.readFile(path.join(__dirname, "db.json"), "utf8", (err, data) => {
+    if (err) return res.status(500).json({ error: "Failed to read data" });
+
+    let notes = JSON.parse(data);
+    const newNotes = notes.filter(n => n.id !== id);
+
+    if (notes.length === newNotes.length) {
+      return res.status(404).json({ error: "Note not found" });
+    }
+
+    fs.writeFile(
+      path.join(__dirname, "db.json"),
+      JSON.stringify(newNotes, null, 2),
+      err => {
+        if (err) return res.status(500).json({ error: "Failed to write data" });
+        res.json({ success: true, id });
+      }
+    );
+  });
+});
+
 
 app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
