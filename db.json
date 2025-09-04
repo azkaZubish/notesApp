@@ -3,11 +3,11 @@
     {
       "id": "2",
       "content": "The star indicates the important note",
-      "important": false
+      "important": true
     },
     {
       "id": "3",
-      "content": "It uses JSON server(package) to store the notes",
+      "content": "It uses JSON server(npm package) to store the notes",
       "important": true
     },
     {

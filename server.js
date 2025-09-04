@@ -5,7 +5,7 @@ import fs from "fs";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
+app.use(express.json());
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
@@ -28,29 +28,29 @@ app.get("/notes/:id", (req, res) => {
     res.json(note);
   });
 });
-app.patch("/notes/:id", express.json(), (req, res) => {
+
+app.patch("/notes/:id", (req, res) => {
   const { id } = req.params;
-  const updated = req.body;
+  const updates = req.body;
 
   fs.readFile(path.join(__dirname, "db.json"), "utf8", (err, data) => {
     if (err) return res.status(500).json({ error: "Failed to read data" });
 
     let notes = JSON.parse(data);
-    let note = notes.find(n => n.id == id);
-    if (!note) return res.status(404).json({ error: "Note not found" });
+    const noteIndex = notes.findIndex(n => n.id == id);
+    if (noteIndex === -1) return res.status(404).json({ error: "Note not found" });
 
-    note = { ...note, ...updated };
-    notes = notes.map(n => (n.id == id ? note : n));
+    notes[noteIndex] = { ...notes[noteIndex], ...updates };
 
-    fs.writeFile(path.join(__dirname, "db.json"), JSON.stringify(notes), err => {
-      if (err) return res.status(500).json({ error: "Failed to update data" });
-      res.json(note);
+    fs.writeFile(path.join(__dirname, "db.json"), JSON.stringify(notes, null, 2), err => {
+      if (err) return res.status(500).json({ error: "Failed to write data" });
+      res.json(notes[noteIndex]);
     });
   });
 });
 
-// Optional: serve index.html if user visits root
-app.get("/", (req, res) => {
+
+app.get(/.*/, (req, res) => {
   res.sendFile(path.join(__dirname, "dist", "index.html"));
 });
 
