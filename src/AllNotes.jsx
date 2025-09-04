@@ -2,6 +2,7 @@ import { useEffect, useState } from "react"
 import axios, { all } from "axios";
 import Note from "./Note";
 import "./AllNotes.css"
+import API_URL from "./api";
 
 export default function AllNotes() {
     const [allNotes, setAllNotes] = useState([]);
@@ -11,7 +12,7 @@ export default function AllNotes() {
     useEffect(() => {
         async function fetchNotes() {
             try {
-                const notes = await axios.get('http://localhost:3001/notes')
+                const notes = await axios.get(`${API_URL}/notes`)
                 setAllNotes(notes.data);
             }
             catch (e) {
@@ -50,7 +51,7 @@ export default function AllNotes() {
             important: false
         }
         try {
-            const res = await axios.post('http://localhost:3001/notes', noteObject)
+            const res = await axios.post(`${API_URL}/notes`, noteObject)
             setAllNotes(prev => [...prev, res.data])
             setNewNote('')
         }
@@ -65,7 +66,7 @@ export default function AllNotes() {
 
     const deleteNote = async (id) => {
         try {
-            await axios.delete(`http://localhost:3001/notes/${id}`)
+            await axios.delete(`${API_URL}/notes/${id}`)
             setAllNotes(prev => prev.filter(note => note.id !== id))
         }
         catch (err) {
@@ -79,7 +80,7 @@ export default function AllNotes() {
         const toBeUpdated = allNotes.find(note => note.id === id);
         const update = { important: !toBeUpdated.important }
         try {
-            const res = await axios.patch(`http://localhost:3001/notes/${id}`, update)
+            const res = await axios.patch(`${API_URL}/notes/${id}`, update)
 
             setAllNotes(prev => prev.map((note) => note.id === id ? res.data : note))
         }
@@ -93,7 +94,7 @@ export default function AllNotes() {
 
         const update = { content: newValue }
         try {
-            const res = await axios.patch(`http://localhost:3001/notes/${id}`, update)
+            const res = await axios.patch(`${API_URL}/notes/${id}`, update)
 
             setAllNotes(prev => prev.map((note) => note.id === id ? res.data : note))
         }
